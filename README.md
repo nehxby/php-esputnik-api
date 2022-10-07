@@ -26,7 +26,7 @@ require_once 'vendor/autoload.php';
 $client = new \Esputnik\Client();
 $client->authenticate('login', 'password');
 
-$repositories = $client->api('balance')->show();
+$repositories = $client->api(\Esputnik\Client::API_BALANCE)->show();
 ```
 
 From `$client` object, you can access to all namespaces.
