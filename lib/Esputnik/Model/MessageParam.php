@@ -2,10 +2,10 @@
 
 namespace Esputnik\Model;
 
-class MessageParam
+class MessageParam extends AbstractModel
 {
-    private $key;
-    private $value;
+    protected $key;
+	protected $value;
 
     /**
      * MessageParam constructor.

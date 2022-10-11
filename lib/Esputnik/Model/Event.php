@@ -2,13 +2,13 @@
 
 namespace Esputnik\Model;
 
-class Event
+class Event extends AbstractModel
 {
     /**
      * Идентификатор-ключ типа события. Если в системе нет типа события с таким ключем, то он создается
      * @var string
      */
-    private $eventTypeKey;
+    protected $eventTypeKey;
 
     /**
      * Идентификатор события. Может совпадать с идентификтором или email-ом контакта.
@@ -16,12 +16,12 @@ class Event
      *
      * @var string
      */
-    private $keyValue;
+	protected $keyValue;
 
     /**
      * @var EventParam[]
      */
-    private $params;
+	protected $params;
 
     /**
      * Event constructor.

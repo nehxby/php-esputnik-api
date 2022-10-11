@@ -2,16 +2,12 @@
 
 namespace Esputnik\Model;
 
-use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
-use JMS\Serializer\Naming\SerializedNameAnnotationStrategy;
-use JMS\Serializer\SerializerBuilder;
-
-class ParametrizedRecipient
+class ParametrizedRecipient extends AbstractModel
 {
-    private $contactId;
-    private $email;
-    private $jsonParam;
-    private $locator;
+	protected $contactId;
+	protected $email;
+	protected $jsonParam;
+	protected $locator;
 
     /**
      * ParametrizedRecipient constructor.
@@ -22,13 +18,9 @@ class ParametrizedRecipient
      */
     public function __construct(Contact $contact, $email, array $params, $locator)
     {
-        $serializer = SerializerBuilder::create()
-            ->setPropertyNamingStrategy(new SerializedNameAnnotationStrategy(new IdenticalPropertyNamingStrategy()))
-            ->build();
+	    $this->jsonParam = json_encode($params);
 
-        $this->jsonParam = $serializer->serialize($params, 'json');
-
-        $this->contactId = $contact->getId();
+	    $this->contactId = $contact->getId();
         $this->email = $email;
         $this->locator = $locator;
     }

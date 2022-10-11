@@ -2,12 +2,12 @@
 
 namespace Esputnik\Model;
 
-class Address
+class Address extends AbstractModel
 {
-    private $region;
-    private $town;
-    private $address;
-    private $postcode;
+    protected $region;
+    protected $town;
+    protected $address;
+    protected $postcode;
 
     /**
      * @return mixed

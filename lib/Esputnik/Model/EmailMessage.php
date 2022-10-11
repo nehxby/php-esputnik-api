@@ -2,37 +2,37 @@
 
 namespace Esputnik\Model;
 
-class EmailMessage
+class EmailMessage extends AbstractModel
 {
     /**
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $name;
+	protected $name;
 
     /**
      * @var string
      */
-    private $from;
+	protected $from;
 
     /**
      * @var string
      */
-    private $subject;
+	protected $subject;
 
     /**
      * @var string
      */
-    private $htmlText;
+	protected $htmlText;
 
     /**
      * @var string[]
      */
-    private $tags = [];
+	protected $tags = [];
 
     /**
      * EmailMessage constructor.
@@ -84,7 +84,7 @@ class EmailMessage
     }
 
     /**
-     * @return string[]
+     * @return string
      */
     public function getHtmlText()
     {

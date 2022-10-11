@@ -2,13 +2,13 @@
 
 namespace Esputnik\Model;
 
-class Channel
+class Channel extends AbstractModel
 {
     const TYPE_EMAIL = 'email';
     const TYPE_SMS = 'sms';
 
-    private $type;
-    private $value;
+    protected $type;
+	protected $value;
 
     /**
      * Channel constructor.

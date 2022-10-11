@@ -2,18 +2,18 @@
 
 namespace Esputnik\Model;
 
-class Contact
+class Contact extends AbstractModel
 {
-    private $id;
-    private $firstName;
-    private $lastName;
-    private $channels = [];
-    private $address;
-    private $fields = [];
-    private $addressBookId;
-    private $contactKey;
-    private $ordersInfo;
-    private $groups = [];
+	protected $id;
+	protected $firstName;
+	protected $lastName;
+	protected $channels = [];
+	protected $address;
+	protected $fields = [];
+	protected $addressBookId;
+	protected $contactKey;
+	protected $ordersInfo;
+	protected $groups = [];
 
     /**
      * Contact constructor.

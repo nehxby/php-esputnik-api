@@ -2,10 +2,10 @@
 
 namespace Esputnik\Model;
 
-class Field
+class Field extends AbstractModel
 {
-    private $id;
-    private $value;
+	protected $id;
+	protected $value;
 
     /**
      * Field constructor.

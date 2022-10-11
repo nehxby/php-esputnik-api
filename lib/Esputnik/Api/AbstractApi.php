@@ -5,9 +5,6 @@ namespace Esputnik\Api;
 use Esputnik\Client;
 use Esputnik\HttpClient\Message\ResponseMediator;
 use GuzzleHttp\Psr7\Response;
-use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
-use JMS\Serializer\Naming\SerializedNameAnnotationStrategy;
-use JMS\Serializer\SerializerBuilder;
 
 abstract class AbstractApi
 {
@@ -77,7 +74,7 @@ abstract class AbstractApi
      * Send a POST request with raw data.
      *
      * @param string $path           Request path.
-     * @param $body                     array body.
+     * @param mixed $body            array body.
      *
      * @return \Psr\Http\Message\StreamInterface
      */
@@ -147,10 +144,6 @@ abstract class AbstractApi
      */
     protected function createJsonBody($parameters)
     {
-        $serializer = SerializerBuilder::create()
-            ->setPropertyNamingStrategy(new SerializedNameAnnotationStrategy(new IdenticalPropertyNamingStrategy()))
-            ->build();
-
-        return $serializer->serialize($parameters, 'json');
+	    return json_encode($parameters);
     }
 }

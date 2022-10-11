@@ -4,14 +4,16 @@ namespace Esputnik\Model;
 
 use Esputnik\Exception\InvalidModelException;
 
-class Group
+class Group extends AbstractModel
 {
     const GROUP_TYPE_STATIC = 'Static';
     const GROUP_TYPE_DYNAMIC = 'Dynamic';
     const GROUP_TYPE_COMBINED = 'Combined';
-    private $id;
-    private $name;
-    private $type;
+
+	protected $id;
+	protected $name;
+	protected $type;
+
     private $types = [
         self::GROUP_TYPE_STATIC,
         self::GROUP_TYPE_DYNAMIC,

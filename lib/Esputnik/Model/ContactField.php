@@ -2,10 +2,10 @@
 
 namespace Esputnik\Model;
 
-class ContactField
+class ContactField extends AbstractModel
 {
-    private $id;
-    private $value;
+	protected $id;
+	protected $value;
 
     /**
      * @return mixed
