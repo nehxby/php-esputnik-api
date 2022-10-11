@@ -29,12 +29,21 @@ class Event extends AbstractModel
      * @param string       $keyValue
      * @param EventParam[] $params
      */
-    public function __construct($eventTypeKey, $keyValue, array $params)
+    public function __construct($eventTypeKey, $keyValue, array $params = [])
     {
         $this->eventTypeKey = $eventTypeKey;
         $this->keyValue = $keyValue;
-        $this->params = $params;
+	    $this->params = array_filter($params, function ($group) {
+		    return $group instanceof EventParam;
+
+	    });
     }
+
+	public function addParam($name, $value)
+	{
+		$this->params[] = new EventParam($name, $value);
+		return $this;
+	}
 
     /**
      * @return string

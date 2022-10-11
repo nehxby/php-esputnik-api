@@ -18,6 +18,6 @@ class ResponseMediator
             }
         }
 
-        return $body;
+        return (string)$body;
     }
 }
