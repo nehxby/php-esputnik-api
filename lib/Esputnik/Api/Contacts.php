@@ -4,41 +4,65 @@ namespace Esputnik\Api;
 
 class Contacts extends AbstractApi
 {
-    /**
-     * Поиск контактов.
-     *
-     * @param int $offset
-     * @return \Psr\Http\Message\StreamInterface
-     */
-    public function all($offset = 1)
-    {
-        return $this->get('contacts/', ['startindex' => $offset]);
-    }
+	const DEDUPE_ON_EMAIL = 'email';
+	const DEDUPE_ON_SMS = 'sms';
+	const DEDUPE_ON_EMAIL_OR_SMS = 'email_or_sms';
+	const DEDUPE_ON_PUSH = 'push';
+	const DEDUPE_ON_WEBPUSH = 'webpush';
+	const DEDUPE_ON_EXTERNAL_ID = 'externalCustomerId';
 
-    public function search($query, $parameters = [])
-    {
-        return $this->get('contacts/', $query, $parameters);
-    }
+	/**
+	 * Поиск контактов.
+	 *
+	 * @param int $offset
+	 * @return \Psr\Http\Message\StreamInterface
+	 */
+	public function all($offset = 1)
+	{
+		return $this->get('contacts/', ['startindex' => $offset]);
+	}
 
-    /**
-     * @param array $contacts
-     * @return \Psr\Http\Message\StreamInterface
-     */
-    public function update(array $contacts)
-    {
-        return $this->post('contacts/', $contacts);
-    }
+	public function search($query, $parameters = [])
+	{
+		return $this->get('contacts/', $query, $parameters);
+	}
 
-    /**
-     * Получить email по идентификатору контакта
-     *
-     * @param array $ids
-     * @return \Psr\Http\Message\StreamInterface
-     */
-    public function getEmail(array $ids)
-    {
-        return $this->get('contacts/email', [
-            'emails' => implode(',', $ids)
-        ]);
-    }
+	/**
+	 * @param array $contacts
+	 * @param $dedupeOn
+	 * @param array $contactFields
+	 * @param array $customFieldsIDs
+	 * @param array $groupNames
+	 * @param bool $restoreDeleted
+	 * @return \Psr\Http\Message\StreamInterface
+	 */
+	public function update(array $contacts, $dedupeOn, array $contactFields, array $customFieldsIDs, array $groupNames,
+	                       $restoreDeleted = FALSE)
+	{
+		$parameters = [
+			'contacts'        => $contacts,
+			'dedupeOn'        => $dedupeOn,
+			//'fieldId' => '', // not implemented
+			'contactFields'   => $contactFields,
+			'customFieldsIDs' => $customFieldsIDs,
+			'groupNames'      => $groupNames,
+			//'groupNamesExclude' => [], // not implemented
+			'restoreDeleted'  => $restoreDeleted,
+			//'eventKeyForNewContacts' => '', // not implemented
+		];
+		return $this->post('contacts/', $parameters);
+	}
+
+	/**
+	 * Получить email по идентификатору контакта
+	 *
+	 * @param array $ids
+	 * @return \Psr\Http\Message\StreamInterface
+	 */
+	public function getEmail(array $ids)
+	{
+		return $this->get('contacts/email', [
+			'emails' => implode(',', $ids)
+		]);
+	}
 }

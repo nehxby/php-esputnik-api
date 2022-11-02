@@ -14,6 +14,7 @@ class Contact extends AbstractModel
 	protected $contactKey;
 	protected $ordersInfo;
 	protected $groups = [];
+	protected $externalCustomerId;
 
     /**
      * Contact constructor.
@@ -172,5 +173,21 @@ class Contact extends AbstractModel
     public function getGroups()
     {
         return $this->groups;
+    }
+
+    /**
+     * @param mixed $externalCustomerId
+     */
+    public function setExternalCustomerId($externalCustomerId)
+    {
+        $this->externalCustomerId = $externalCustomerId;
+    }
+
+    /**
+     * @return array
+     */
+    public function getExternalCustomerId()
+    {
+        return $this->externalCustomerId;
     }
 }
