@@ -2,42 +2,44 @@
 
 namespace Esputnik\Api;
 
+use Esputnik\Exception\ErrorException;
+use GuzzleHttp\Exception\GuzzleException;
+
 class Contacts extends AbstractApi
 {
-	const DEDUPE_ON_EMAIL = 'email';
-	const DEDUPE_ON_SMS = 'sms';
-	const DEDUPE_ON_EMAIL_OR_SMS = 'email_or_sms';
-	const DEDUPE_ON_PUSH = 'push';
-	const DEDUPE_ON_WEBPUSH = 'webpush';
-	const DEDUPE_ON_EXTERNAL_ID = 'externalCustomerId';
+	public const string DEDUPE_ON_EMAIL = 'email';
+	public const string DEDUPE_ON_SMS = 'sms';
+	public const string DEDUPE_ON_EMAIL_OR_SMS = 'email_or_sms';
+	public const string DEDUPE_ON_PUSH = 'push';
+	public const string DEDUPE_ON_WEBPUSH = 'webpush';
+	public const string DEDUPE_ON_EXTERNAL_ID = 'externalCustomerId';
 
 	/**
 	 * Поиск контактов.
 	 *
-	 * @param int $offset
-	 * @return \Psr\Http\Message\StreamInterface
+	 * @throws ErrorException
+	 * @throws GuzzleException
 	 */
-	public function all($offset = 1)
+	public function all(int $offset = 1)
 	{
 		return $this->get('contacts/', ['startindex' => $offset]);
 	}
 
-	public function search($query, $parameters = [])
+	/**
+	 * @throws ErrorException
+	 * @throws GuzzleException
+	 */
+	public function search(array $query, array $parameters = [])
 	{
 		return $this->get('contacts/', $query, $parameters);
 	}
 
 	/**
-	 * @param array $contacts
-	 * @param $dedupeOn
-	 * @param array $contactFields
-	 * @param array $customFieldsIDs
-	 * @param array $groupNames
-	 * @param bool $restoreDeleted
-	 * @return \Psr\Http\Message\StreamInterface
+	 * @throws ErrorException
+	 * @throws GuzzleException
 	 */
 	public function update(array $contacts, $dedupeOn, array $contactFields, array $customFieldsIDs, array $groupNames,
-	                       $restoreDeleted = FALSE)
+	                       bool  $restoreDeleted = FALSE)
 	{
 		$parameters = [
 			'contacts'        => $contacts,
@@ -56,8 +58,8 @@ class Contacts extends AbstractApi
 	/**
 	 * Получить email по идентификатору контакта
 	 *
-	 * @param array $ids
-	 * @return \Psr\Http\Message\StreamInterface
+	 * @throws ErrorException
+	 * @throws GuzzleException
 	 */
 	public function getEmail(array $ids)
 	{

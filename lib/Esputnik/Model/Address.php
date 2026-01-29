@@ -4,72 +4,48 @@ namespace Esputnik\Model;
 
 class Address extends AbstractModel
 {
-    protected $region;
-    protected $town;
-    protected $address;
-    protected $postcode;
+	protected ?string $region = NULL;
+	protected ?string $town = NULL;
+	protected ?string $address = NULL;
+	protected ?string $postcode = NULL;
 
-    /**
-     * @return mixed
-     */
-    public function getRegion()
-    {
-        return $this->region;
-    }
+	public function getRegion(): ?string
+	{
+		return $this->region;
+	}
 
-    /**
-     * @param mixed $region
-     */
-    public function setRegion($region)
-    {
-        $this->region = $region;
-    }
+	public function setRegion(string $region): void
+	{
+		$this->region = $region;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getTown()
-    {
-        return $this->town;
-    }
+	public function getTown(): ?string
+	{
+		return $this->town;
+	}
 
-    /**
-     * @param mixed $town
-     */
-    public function setTown($town)
-    {
-        $this->town = $town;
-    }
+	public function setTown(string $town): void
+	{
+		$this->town = $town;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getAddress()
-    {
-        return $this->address;
-    }
+	public function getAddress(): ?string
+	{
+		return $this->address;
+	}
 
-    /**
-     * @param mixed $address
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
-    }
+	public function setAddress(string $address): void
+	{
+		$this->address = $address;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getPostcode()
-    {
-        return $this->postcode;
-    }
+	public function getPostcode(): ?string
+	{
+		return $this->postcode;
+	}
 
-    /**
-     * @param mixed $postcode
-     */
-    public function setPostcode($postcode)
-    {
-        $this->postcode = $postcode;
-    }
+	public function setPostcode(string $postcode): void
+	{
+		$this->postcode = $postcode;
+	}
 }

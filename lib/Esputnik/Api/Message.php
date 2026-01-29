@@ -2,157 +2,146 @@
 
 namespace Esputnik\Api;
 
+use Esputnik\Exception\ErrorException;
 use Esputnik\Exception\MissingArgumentException;
 use Esputnik\Model\Contact as ContactModel;
 use Esputnik\Model\Group as GroupModel;
 use Esputnik\Model\MessageParam;
 use Esputnik\Model\ParametrizedRecipient;
+use GuzzleHttp\Exception\GuzzleException;
 
 class Message extends AbstractApi
 {
-    /**
-     * Отправка рассылки по заранее созданному сообщению. Сообщение может дополнительно параметризироваться.
-     *
-     * @param int             $id
-     * @param ContactModel    $contact
-     * @param boolean         $isEmail
-     * @param MessageParam[]  $params
-     * @param string          $fromName
-     * @param array|null      $recipients
-     * @param GroupModel|null $group
-     * @return \Psr\Http\Message\StreamInterface
-     */
-    public function send(
-        $id,
-        ContactModel $contact,
-        $isEmail,
-        array $params,
-        $fromName,
-        array $recipients = null,
-        GroupModel $group = null
-    ) {
-    
-        $queryParams = [
-            'contactId' => $contact->getId(),
-            'email' => (bool) $isEmail,
-            'params' => $params,
-            'fromName' => $fromName,
-        ];
+	/**
+	 * Отправка рассылки по заранее созданному сообщению. Сообщение может дополнительно параметризироваться.
+	 *
+	 * @param MessageParam[] $params
+	 * @throws ErrorException
+	 * @throws GuzzleException
+	 */
+	public function send(
+		int          $id,
+		ContactModel $contact,
+		bool         $isEmail,
+		array        $params,
+		string       $fromName,
+		?array       $recipients = NULL,
+		?GroupModel  $group = NULL
+	)
+	{
 
-        if ($group) {
-            $queryParams['groupId'] = $group->getId();
-        }
+		$queryParams = [
+			'contactId' => $contact->getId(),
+			'email'     => $isEmail,
+			'params'    => $params,
+			'fromName'  => $fromName,
+		];
 
-        if ($recipients) {
-            $queryParams['recipients'] = $recipients;
-        }
+		if ($group) {
+			$queryParams['groupId'] = $group->getId();
+		}
 
-        return $this->post('message/'.rawurlencode($id).'/send', $queryParams);
-    }
+		if ($recipients) {
+			$queryParams['recipients'] = $recipients;
+		}
 
-    /**
-     * Отправка подготовленного сообщения одному или многим контактам.
-     * Сообщение может параметризироваться для каждого контакта отдельно.
-     *
-     * @param int                     $id
-     * @param ParametrizedRecipient[] $recipients
-     * @param boolean                 $isEmail
-     * @param string                  $fromName
-     * @return string
-     */
-    public function smartSend($id, array $recipients, $isEmail, $fromName)
-    {
-        $queryParams = [
-            'recipients' => $recipients,
-            'email' => (bool) $isEmail,
-            'fromName' => $fromName
-        ];
+		return $this->post('message/' . rawurlencode((string)$id) . '/send', $queryParams);
+	}
 
-        return $this->post('message/'.rawurlencode($id).'/smartsend', $queryParams);
-    }
+	/**
+	 * Отправка подготовленного сообщения одному или многим контактам.
+	 * Сообщение может параметризироваться для каждого контакта отдельно.
+	 *
+	 * @param ParametrizedRecipient[] $recipients
+	 * @throws ErrorException
+	 * @throws GuzzleException
+	 */
+	public function smartSend(int $id, array $recipients, bool $isEmail, string $fromName)
+	{
+		$queryParams = [
+			'recipients' => $recipients,
+			'email'      => $isEmail,
+			'fromName'   => $fromName
+		];
 
-    /**
-     * Отправить email-сообщение. Если контакта с таким адресом нет, он будет создан.
-     *
-     * @param $from
-     * @param $subject
-     * @param $htmlText
-     * @param $plainText
-     * @param array $emails
-     * @param array $tags
-     * @return \Psr\Http\Message\StreamInterface
-     */
-    public function email($from, $subject, $htmlText, $plainText, array $emails, array $tags)
-    {
-        $queryParams = [
-            'from' => $from,
-            'subject' => $subject,
-            'htmlText' => $htmlText,
-            'plainText' => $plainText,
-            'emails' => $emails,
-            'tags' => $tags,
-        ];
+		return $this->post('message/' . rawurlencode((string)$id) . '/smartsend', $queryParams);
+	}
 
-        return $this->post('message/email/', $queryParams);
-    }
+	/**
+	 * Отправить email-сообщение. Если контакта с таким адресом нет, он будет создан.
+	 *
+	 * @throws ErrorException
+	 * @throws GuzzleException
+	 */
+	public function email(string $from, string $subject, string $htmlText, string $plainText, array $emails, array $tags)
+	{
+		$queryParams = [
+			'from'      => $from,
+			'subject'   => $subject,
+			'htmlText'  => $htmlText,
+			'plainText' => $plainText,
+			'emails'    => $emails,
+			'tags'      => $tags,
+		];
 
-    /**
-     * Получить статус одиночного email сообщения.
-     *
-     * @param $ids
-     * @return \Psr\Http\Message\StreamInterface
-     */
-    public function emailStatus($ids)
-    {
-        return $this->get('message/email/status/', [
-            'ids' => join(',', $ids)
-        ]);
-    }
+		return $this->post('message/email/', $queryParams);
+	}
 
-    /**
-     * Отправить sms-сообщение. Если контакта с таким номером телефона нет, он будет создан.
-     *
-     * @param string $from
-     * @param string $text
-     * @param string[] $tags
-     * @param string[] $phoneNumbers
-     * @param int|null $groupId
-     * @return \Psr\Http\Message\StreamInterface
-     * @throws MissingArgumentException
-     */
-    public function sms($from, $text, array $tags = [], array $phoneNumbers = [], $groupId = null)
-    {
-        $queryParams = [
-            'from' => $from,
-            'text' => $text,
-        ];
-        if (!$phoneNumbers and !$groupId) {
-            throw new MissingArgumentException(['phoneNumbers', 'groupId']);
-        }
+	/**
+	 * Получить статус одиночного email сообщения.
+	 *
+	 * @throws ErrorException
+	 * @throws GuzzleException
+	 */
+	public function emailStatus(array $ids)
+	{
+		return $this->get('message/email/status/', [
+			'ids' => join(',', $ids)
+		]);
+	}
 
-        if (!empty($phoneNumbers)) {
-            $queryParams['phoneNumbers'] = $phoneNumbers;
-        }
-        if ($groupId) {
-            $queryParams['groupId'] = $groupId;
-        }
-        if (!empty($tags)) {
-            $queryParams['tags'] = $tags;
-        }
+	/**
+	 * Отправить sms-сообщение. Если контакта с таким номером телефона нет, он будет создан.
+	 *
+	 * @param string[] $tags
+	 * @param string[] $phoneNumbers
+	 * @throws ErrorException
+	 * @throws GuzzleException
+	 * @throws MissingArgumentException
+	 */
+	public function sms(string $from, string $text, array $tags = [], array $phoneNumbers = [], ?int $groupId = NULL)
+	{
+		$queryParams = [
+			'from' => $from,
+			'text' => $text,
+		];
+		if (empty($phoneNumbers) and !$groupId) {
+			throw new MissingArgumentException(['phoneNumbers', 'groupId']);
+		}
 
-        return $this->post('message/sms/', $queryParams);
-    }
+		if (!empty($phoneNumbers)) {
+			$queryParams['phoneNumbers'] = $phoneNumbers;
+		}
+		if ($groupId) {
+			$queryParams['groupId'] = $groupId;
+		}
+		if (!empty($tags)) {
+			$queryParams['tags'] = $tags;
+		}
 
-    /**
-     * Получить статус одиночного sms сообщения.
-     *
-     * @param $ids
-     * @return \Psr\Http\Message\StreamInterface
-     */
-    public function smsStatus($ids)
-    {
-        return $this->get('message/sms/status/', [
-            'ids' => join(',', $ids)
-        ]);
-    }
+		return $this->post('message/sms/', $queryParams);
+	}
+
+	/**
+	 * Получить статус одиночного sms сообщения.
+	 *
+	 * @throws ErrorException
+	 * @throws GuzzleException
+	 */
+	public function smsStatus(array $ids)
+	{
+		return $this->get('message/sms/status/', [
+			'ids' => join(',', $ids)
+		]);
+	}
 }

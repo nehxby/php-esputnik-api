@@ -6,53 +6,44 @@ use Esputnik\Exception\InvalidModelException;
 
 class Group extends AbstractModel
 {
-    const GROUP_TYPE_STATIC = 'Static';
-    const GROUP_TYPE_DYNAMIC = 'Dynamic';
-    const GROUP_TYPE_COMBINED = 'Combined';
+	public const string GROUP_TYPE_STATIC = 'Static';
+	public const string GROUP_TYPE_DYNAMIC = 'Dynamic';
+	public const string GROUP_TYPE_COMBINED = 'Combined';
 
-	protected $id;
-	protected $name;
-	protected $type;
+	protected ?int $id = NULL;
+	protected string $name;
+	protected string $type;
 
-    private $types = [
-        self::GROUP_TYPE_STATIC,
-        self::GROUP_TYPE_DYNAMIC,
-        self::GROUP_TYPE_COMBINED,
-    ];
+	private array $types = [
+		self::GROUP_TYPE_STATIC,
+		self::GROUP_TYPE_DYNAMIC,
+		self::GROUP_TYPE_COMBINED,
+	];
 
-    /**
-     * Group constructor.
-     * @param $type
-     * @param $name
-     * @throws InvalidModelException
-     */
-    public function __construct($type, $name)
-    {
-        $this->name = $name;
-        $this->type = $type;
-    }
+	/**
+	 * @throws InvalidModelException
+	 */
+	public function __construct(string $type, string $name)
+	{
+		if (!in_array($type, $this->types)) {
+			throw new InvalidModelException('Invalid group type: ' . $type);
+		}
+		$this->name = $name;
+		$this->type = $type;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+	public function getId(): ?int
+	{
+		return $this->id;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
+	public function getName(): string
+	{
+		return $this->name;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
+	public function getType(): string
+	{
+		return $this->type;
+	}
 }

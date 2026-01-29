@@ -4,36 +4,25 @@ namespace Esputnik\Model;
 
 class Channel extends AbstractModel
 {
-    const TYPE_EMAIL = 'email';
-    const TYPE_SMS = 'sms';
+	public const string TYPE_EMAIL = 'email';
+	public const string TYPE_SMS = 'sms';
 
-    protected $type;
-	protected $value;
+	protected string $type;
+	protected string $value;
 
-    /**
-     * Channel constructor.
-     * @param $type
-     * @param $value
-     */
-    public function __construct($type, $value)
-    {
-        $this->type = $type;
-        $this->value = $value;
-    }
+	public function __construct(string $type, string $value)
+	{
+		$this->type = $type;
+		$this->value = $value;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
+	public function getType(): string
+	{
+		return $this->type;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
+	public function getValue(): string
+	{
+		return $this->value;
+	}
 }

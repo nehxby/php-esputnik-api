@@ -4,40 +4,23 @@ namespace Esputnik\Model;
 
 class EventParam extends AbstractModel
 {
-	/**
-	 * @var string
-	 */
-	protected $name;
+	protected string $name;
 
-	/**
-     * @var string
-     */
-	protected $value;
+	protected string $value;
 
-    /**
-     * EventParam constructor.
-     * @param string $value
-     * @param string $name
-     */
-    public function __construct($name, $value)
-    {
-	    $this->name = $name;
-	    $this->value = $value;
-    }
+	public function __construct(string $name, string $value)
+	{
+		$this->name = $name;
+		$this->value = $value;
+	}
 
-    /**
-     * @return string
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
+	public function getValue(): string
+	{
+		return $this->value;
+	}
 
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
+	public function getName(): string
+	{
+		return $this->name;
+	}
 }

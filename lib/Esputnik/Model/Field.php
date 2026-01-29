@@ -4,33 +4,22 @@ namespace Esputnik\Model;
 
 class Field extends AbstractModel
 {
-	protected $id;
-	protected $value;
+	protected int $id;
+	protected mixed $value;
 
-    /**
-     * Field constructor.
-     * @param $id
-     * @param $value
-     */
-    public function __construct($id, $value)
-    {
-        $this->id = $id;
-        $this->value = $value;
-    }
+	public function __construct(int $id, mixed $value)
+	{
+		$this->id = $id;
+		$this->value = $value;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+	public function getId(): int
+	{
+		return $this->id;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
+	public function getValue()
+	{
+		return $this->value;
+	}
 }

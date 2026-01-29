@@ -4,190 +4,138 @@ namespace Esputnik\Model;
 
 class Contact extends AbstractModel
 {
-	protected $id;
-	protected $firstName;
-	protected $lastName;
-	protected $channels = [];
-	protected $address;
-	protected $fields = [];
-	protected $addressBookId;
-	protected $contactKey;
+	protected ?int $id = NULL;
+	protected string $firstName;
+	protected ?string $lastName = NULL;
+	protected array $channels = [];
+	protected ?Address $address = NULL;
+	/**
+	 * @var Field[] $fields
+	 */
+	protected array $fields = [];
+	protected ?int $addressBookId = NULL;
+	protected ?string $contactKey;
 	protected $ordersInfo;
-	protected $groups = [];
-	protected $externalCustomerId;
+	/**
+	 * @var Group[] $groups
+	 */
+	protected array $groups = [];
+	protected string|int $externalCustomerId;
 
-    /**
-     * Contact constructor.
-     * @param $firstName
-     * @param array     $groups
-     * @param array     $channels
-     */
-    public function __construct($firstName, array $groups, array $channels)
-    {
-        $this->firstName = $firstName;
-        $this->groups = array_filter($groups, function ($group) {
-            return $group instanceof Group;
-
-        });
-        $this->channels = array_filter($channels, function ($channel) {
-            return $channel instanceof Channel;
-
-        });
-    }
+	/**
+	 * @param array $groups elements should be Group instances
+	 * @param array $channels elements should be Channel instances
+	 */
+	public function __construct(string $firstName, array $groups, array $channels)
+	{
+		$this->firstName = $firstName;
+		$this->groups = array_filter($groups, fn($group) => $group instanceof Group);
+		$this->channels = array_filter($channels, fn($channel) => $channel instanceof Channel);
+	}
 
 
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+	public function getId(): ?int
+	{
+		return $this->id;
+	}
 
-    /**
-     * @return string
-     */
-    public function getFirstName()
-    {
-        return $this->firstName;
-    }
+	public function getFirstName(): string
+	{
+		return $this->firstName;
+	}
 
-    /**
-     * @param mixed $firstName
-     */
-    public function setFirstName($firstName)
-    {
-        $this->firstName = $firstName;
-    }
+	public function setFirstName(string $firstName): void
+	{
+		$this->firstName = $firstName;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getLastName()
-    {
-        return $this->lastName;
-    }
+	public function getLastName(): ?string
+	{
+		return $this->lastName;
+	}
 
-    /**
-     * @param string $lastName
-     */
-    public function setLastName($lastName)
-    {
-        $this->lastName = $lastName;
-    }
+	public function setLastName(string $lastName): void
+	{
+		$this->lastName = $lastName;
+	}
 
-    /**
-     * @return array
-     */
-    public function getChannels()
-    {
-        return $this->channels;
-    }
+	public function getChannels(): array
+	{
+		return $this->channels;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getAddress()
-    {
-        return $this->address;
-    }
+	public function getAddress(): ?Address
+	{
+		return $this->address;
+	}
 
-    /**
-     * @param Address $address
-     * @return $this
-     */
-    public function setAddress(Address $address)
-    {
-        $this->address = $address;
+	/**
+	 * @return $this
+	 */
+	public function setAddress(Address $address): static
+	{
+		$this->address = $address;
+		return $this;
+	}
 
-        return $this;
-    }
+	/**
+	 * @return Field[]
+	 */
+	public function getFields(): array
+	{
+		return $this->fields;
+	}
 
-    /**
-     * @return array
-     */
-    public function getFields()
-    {
-        return $this->fields;
-    }
+	public function addField(Field $field): void
+	{
+		$this->fields[] = $field;
+	}
 
-    /**
-     * @param Field $fields
-     */
-    public function addField(Field $fields)
-    {
-        $this->fields[] = $fields;
-    }
+	public function getAddressBookId(): ?int
+	{
+		return $this->addressBookId;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getAddressBookId()
-    {
-        return $this->addressBookId;
-    }
+	public function setAddressBookId(int $addressBookId): void
+	{
+		$this->addressBookId = $addressBookId;
+	}
 
-    /**
-     * @param mixed $addressBookId
-     */
-    public function setAddressBookId($addressBookId)
-    {
-        $this->addressBookId = $addressBookId;
-    }
+	public function getContactKey(): ?string
+	{
+		return $this->contactKey;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getContactKey()
-    {
-        return $this->contactKey;
-    }
+	public function setContactKey(string $contactKey): void
+	{
+		$this->contactKey = $contactKey;
+	}
 
-    /**
-     * @param mixed $contactKey
-     */
-    public function setContactKey($contactKey)
-    {
-        $this->contactKey = $contactKey;
-    }
+	public function getOrdersInfo()
+	{
+		return $this->ordersInfo;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getOrdersInfo()
-    {
-        return $this->ordersInfo;
-    }
+	public function setOrdersInfo($ordersInfo): void
+	{
+		$this->ordersInfo = $ordersInfo;
+	}
 
-    /**
-     * @param mixed $ordersInfo
-     */
-    public function setOrdersInfo($ordersInfo)
-    {
-        $this->ordersInfo = $ordersInfo;
-    }
+	/**
+	 * @return Group[]
+	 */
+	public function getGroups(): array
+	{
+		return $this->groups;
+	}
 
-    /**
-     * @return array
-     */
-    public function getGroups()
-    {
-        return $this->groups;
-    }
+	public function setExternalCustomerId(int|string $externalCustomerId): void
+	{
+		$this->externalCustomerId = $externalCustomerId;
+	}
 
-    /**
-     * @param mixed $externalCustomerId
-     */
-    public function setExternalCustomerId($externalCustomerId)
-    {
-        $this->externalCustomerId = $externalCustomerId;
-    }
-
-    /**
-     * @return array
-     */
-    public function getExternalCustomerId()
-    {
-        return $this->externalCustomerId;
-    }
+	public function getExternalCustomerId(): int|string
+	{
+		return $this->externalCustomerId;
+	}
 }

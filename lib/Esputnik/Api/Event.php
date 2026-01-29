@@ -2,15 +2,17 @@
 
 namespace Esputnik\Api;
 
+use Esputnik\Exception\ErrorException;
 use Esputnik\Model\Event as EventModel;
+use GuzzleHttp\Exception\GuzzleException;
 
 class Event extends AbstractApi
 {
 	/**
 	 * Сгенерировать событие.
 	 *
-	 * @param EventModel $event
-	 * @return \Psr\Http\Message\StreamInterface
+	 * @throws ErrorException
+	 * @throws GuzzleException
 	 */
 	public function add(EventModel $event)
 	{

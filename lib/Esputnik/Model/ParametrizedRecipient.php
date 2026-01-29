@@ -4,56 +4,40 @@ namespace Esputnik\Model;
 
 class ParametrizedRecipient extends AbstractModel
 {
-	protected $contactId;
-	protected $email;
-	protected $jsonParam;
-	protected $locator;
+	protected int $contactId;
+	protected string $email;
+	protected ?string $jsonParam;
+	protected string $locator;
 
-    /**
-     * ParametrizedRecipient constructor.
-     * @param Contact        $contact
-     * @param string         $email
-     * @param MessageParam[] $params
-     * @param string         $locator
-     */
-    public function __construct(Contact $contact, $email, array $params, $locator)
-    {
-	    $this->jsonParam = json_encode($params);
+	/**
+	 * @param MessageParam[] $params
+	 */
+	public function __construct(Contact $contact, string $email, array $params, string $locator)
+	{
+		$this->jsonParam = json_encode($params) ?: NULL;
 
-	    $this->contactId = $contact->getId();
-        $this->email = $email;
-        $this->locator = $locator;
-    }
+		$this->contactId = $contact->getId();
+		$this->email = $email;
+		$this->locator = $locator;
+	}
 
-    /**
-     * @return int
-     */
-    public function getContactId()
-    {
-        return $this->contactId;
-    }
+	public function getContactId(): int
+	{
+		return $this->contactId;
+	}
 
-    /**
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
+	public function getEmail(): string
+	{
+		return $this->email;
+	}
 
-    /**
-     * @return mixed|string
-     */
-    public function getJsonParam()
-    {
-        return $this->jsonParam;
-    }
+	public function getJsonParam(): ?string
+	{
+		return $this->jsonParam;
+	}
 
-    /**
-     * @return string
-     */
-    public function getLocator()
-    {
-        return $this->locator;
-    }
+	public function getLocator(): string
+	{
+		return $this->locator;
+	}
 }

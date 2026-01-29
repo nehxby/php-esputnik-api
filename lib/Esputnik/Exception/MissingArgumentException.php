@@ -9,12 +9,9 @@ namespace Esputnik\Exception;
  */
 class MissingArgumentException extends ErrorException
 {
-    public function __construct(array $required, $code = 0, $previous = null)
-    {
-        if (is_string($required)) {
-            $required = array($required);
-        }
-
-        parent::__construct(sprintf('One or more of required ("%s") parameters is missing!', implode('", "', $required)), $code, $previous);
-    }
+	public function __construct(array $required, $code = 0, $previous = NULL)
+	{
+		$format = 'One or more of required ("%s") parameters is missing!';
+		parent::__construct(sprintf($format, implode('", "', $required)), $code, $previous);
+	}
 }

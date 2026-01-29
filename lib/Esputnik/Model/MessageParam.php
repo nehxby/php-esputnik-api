@@ -4,33 +4,22 @@ namespace Esputnik\Model;
 
 class MessageParam extends AbstractModel
 {
-    protected $key;
-	protected $value;
+	protected string $key;
+	protected mixed $value;
 
-    /**
-     * MessageParam constructor.
-     * @param $key
-     * @param $value
-     */
-    public function __construct($key, $value)
-    {
-        $this->key = $key;
-        $this->value = $value;
-    }
+	public function __construct(string $key, mixed $value)
+	{
+		$this->key = $key;
+		$this->value = $value;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getKey()
-    {
-        return $this->key;
-    }
+	public function getKey(): string
+	{
+		return $this->key;
+	}
 
-    /**
-     * @return mixed
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
+	public function getValue()
+	{
+		return $this->value;
+	}
 }

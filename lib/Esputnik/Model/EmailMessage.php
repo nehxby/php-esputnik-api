@@ -4,98 +4,63 @@ namespace Esputnik\Model;
 
 class EmailMessage extends AbstractModel
 {
-    /**
-     * @var int
-     */
-    protected $id;
+	protected int $id;
 
-    /**
-     * @var string
-     */
-	protected $name;
+	protected string $name;
 
-    /**
-     * @var string
-     */
-	protected $from;
+	protected string $from;
 
-    /**
-     * @var string
-     */
-	protected $subject;
+	protected string $subject;
 
-    /**
-     * @var string
-     */
-	protected $htmlText;
+	protected string $htmlText;
 
-    /**
-     * @var string[]
-     */
-	protected $tags = [];
+	/**
+	 * @var string[]
+	 */
+	protected array $tags = [];
 
-    /**
-     * EmailMessage constructor.
-     * @param string   $name
-     * @param string   $from
-     * @param string   $subject
-     * @param string   $htmlText
-     * @param string[] $tags
-     */
-    public function __construct($name, $from, $subject, $htmlText, array $tags = [])
-    {
-        $this->name = $name;
-        $this->from = $from;
-        $this->subject = $subject;
-        $this->htmlText = $htmlText;
-        $this->tags = $tags;
-    }
+	/**
+	 * @param string[] $tags
+	 */
+	public function __construct(string $name, string $from, string $subject, string $htmlText, array $tags = [])
+	{
+		$this->name = $name;
+		$this->from = $from;
+		$this->subject = $subject;
+		$this->htmlText = $htmlText;
+		$this->tags = $tags;
+	}
 
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+	public function getId(): int
+	{
+		return $this->id;
+	}
 
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
+	public function getName(): string
+	{
+		return $this->name;
+	}
 
-    /**
-     * @return string
-     */
-    public function getFrom()
-    {
-        return $this->from;
-    }
+	public function getFrom(): string
+	{
+		return $this->from;
+	}
 
-    /**
-     * @return string
-     */
-    public function getSubject()
-    {
-        return $this->subject;
-    }
+	public function getSubject(): string
+	{
+		return $this->subject;
+	}
 
-    /**
-     * @return string
-     */
-    public function getHtmlText()
-    {
-        return $this->htmlText;
-    }
+	public function getHtmlText(): string
+	{
+		return $this->htmlText;
+	}
 
-    /**
-     * @return string[]
-     */
-    public function getTags()
-    {
-        return $this->tags;
-    }
+	/**
+	 * @return string[]
+	 */
+	public function getTags(): array
+	{
+		return $this->tags;
+	}
 }

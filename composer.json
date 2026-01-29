@@ -20,13 +20,13 @@
     },
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.5",
+        "php": "^8.4",
         "ext-curl": "*",
         "ext-json": "*",
-        "guzzlehttp/guzzle": "6.*"
+        "guzzlehttp/guzzle": "^7.0"
     },
     "require-dev": {
-        "phpspec/phpspec": "dev-master"
+        "phpspec/phpspec": "dev-main"
     },
     "autoload": {
         "psr-4": { "Esputnik\\": "lib/Esputnik/" }
